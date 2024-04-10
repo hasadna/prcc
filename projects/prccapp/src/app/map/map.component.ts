@@ -14,33 +14,18 @@ import { ApiService } from '../api.service';
 })
 export class MapComponent implements AfterViewInit{
 
-  // if changing to a different account you need to change also the ACCESS TOKEn in MapboxService
-  //STYLE = 'mapbox://styles/evyatark/cln35bpaw035j01pjexdw4yt6/draft'; // ev6
+  // if changing to a different account you need to change also the ACCESS TOKEN in MapboxService!!
   STYLE = 'mapbox://styles/evyatark3108/clnljjtd7003i01plcccdek9h/draft'; // evyatark3108 prcc01
 
   OWN_LAYERS = [
-    // 'cadaster-label',
-    // 'cadaster-border',
-    // 'stat-areas-label',
-    // 'stat-areas-border',
-    // 'stat-areas-fill',
-    // 'munis-label',
-    // 'munis-border',
-    // 'munis-fill',
-    // 'parcels-label',
-    // 'parcels-border',
-    // 'parcels-fill',
-    // 'roads-border',
     'prcc-settlements-data',
     'prcc-statistical-areas',
     'prcc-settlements-data-borders',
     'prcc-statistical-areas-borders',
-    'parcels', // gush chelka from Adam
-    'parcels-labels', // gush chelka from Adam
-    //'settlement-major-label','settlement-minor-label','settlement-subdivision-label',
+    'parcels', // gush chelka
+    'parcels-labels', // gush chelka
     'trees', // yaad trees
     'canopies', // yaad chupot
-    //'il-map-places-final',
     'lst-tiles-8-11',
     'evyatark-lst-tiles-8-16',
     'evyatark-ndvi-tiles-8-16',
@@ -60,14 +45,26 @@ export class MapComponent implements AfterViewInit{
 
   popup: mapboxgl.Popup | null = null;
 
-  constructor(private mapboxService: MapboxService, private state: StateService,
-              private router: Router, private api: ApiService) {
+  constructor(private mapboxService: MapboxService, 
+              private state: StateService,
+              private router: Router, 
+              private api: ApiService) {
   }
 
   ngAfterViewInit() {
     this.mapboxService.init.subscribe(() => {
       this.initialize();
     });
+  }
+
+  click_on_map(e: any, base: string, prop: string) {
+    const features = e.features;
+    if (features && features.length > 0) {
+      const feature: any = features[0];
+      if (feature.properties?.[prop]) {
+        this.router.navigate([base, feature.properties[prop]], {queryParamsHandling: 'merge'});
+      }
+    }
   }
 
   initialize() {
@@ -93,13 +90,14 @@ export class MapComponent implements AfterViewInit{
       console.log('on load STARTED');
       this.CLICKS.forEach(([layer, base, prop]) => {
         this.map.on('click', layer, (e) => {
-          const features = e.features;
-          if (features && features.length > 0) {
-            const feature: any = features[0];
-            if (feature.properties?.[prop]) {
-              this.router.navigate([base, feature.properties[prop]], {queryParamsHandling: 'merge'});
-            }
-          }
+          this.click_on_map(e, base, prop);
+          // const features = e.features;
+          // if (features && features.length > 0) {
+          //   const feature: any = features[0];
+          //   if (feature.properties?.[prop]) {
+          //     this.router.navigate([base, feature.properties[prop]], {queryParamsHandling: 'merge'});
+          //   }
+          // }
         });
       });
       console.log('LAYERS:');
@@ -163,6 +161,7 @@ export class MapComponent implements AfterViewInit{
           //   console.log("parcels layer");
           // }
           if (this.ownLayer(layer)) {
+            // tell the map to show or hide this layer
             if (state.isLayerVisible(layer.id)) {
               console.log('set visibility of layer', layer.id, 'to visible');
               this.map.setLayoutProperty(layer.id, 'visibility', 'visible');
@@ -190,6 +189,7 @@ export class MapComponent implements AfterViewInit{
             }
             if (lc?.paint) {
               Object.keys(lc.paint).forEach((key) => {
+                // layerConfig.paint property has a value '' - acording to this value we decide which property defines the colors of the polygons
                 this.map.setPaintProperty(layer.id, key, lc.paint[key]);
               });
             }
