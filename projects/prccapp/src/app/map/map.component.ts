@@ -37,7 +37,7 @@ export class MapComponent implements AfterViewInit{
     ['prcc-settlements-data', 'munis', 'CODE'],
   ];
   
-  @ViewChild('map') mapEl: ElementRef;
+  @ViewChild('map') mapEl: ElementRef;    // <== access the HTML element containing the attribute "#map"
 
   map: mapboxgl.Map;
 
