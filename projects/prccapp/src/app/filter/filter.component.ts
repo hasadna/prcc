@@ -78,7 +78,10 @@ export class FilterComponent {
     });
   }
 
+
   toggleValue(id: string, event: Event) {
+    console.log("toggleValue() started, id=" + id);
+    console.log(event);
     const value = (event.target as HTMLSelectElement).value;
     this._selected[id] = this._selected[id] || [];
     if (this._selected[id].indexOf(value) >= 0) {

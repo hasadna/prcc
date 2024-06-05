@@ -133,6 +133,22 @@ export class MuniState extends State {
             40, ['to-color', '#FF0000'],
         ];
 
+        const color_step_for_temperature = [
+            'step',
+            ['get', 'Temperatur'],
+            ['to-color', '#D9D9D9'],
+            30,
+            ['to-color', '#F7DEDF'],
+            33,
+            ['to-color', '#EDB1B2'],
+            34,
+            ['to-color', '#E58586'],
+            35,
+            ['to-color', '#DE5959'],
+            37,
+            ['to-color', '#EC1E26']
+        ];
+
         const color_interpolation_for_cluster = [
                     'match', ['coalesce', ['get', 'cluster17'], 0],
                     0, ['to-color', '#9BD7F5'],
@@ -155,16 +171,17 @@ export class MuniState extends State {
         }
         console.log('using opacity ', opacity);
         const paint_definitions_for_temperature = {
-            'fill-color': color_interpolation_for_temperature,
-            'fill-opacity': 0.3
+            'fill-color': color_step_for_temperature,
+            //'fill-color': color_interpolation_for_temperature,
+            'fill-opacity': opacity
         };
         const paint_definitions_for_vegetation = {
-            'fill-color': color_interpolation_for_vegetation,
-            'fill-opacity': 0.3
+            'fill-color': color_interpolation_for_vegetation,   // ToDo change to step
+            'fill-opacity': opacity
         };
         const paint_definitions_for_cluster = {
             'fill-color': color_interpolation_for_cluster,
-            'fill-opacity': 0.3
+            'fill-opacity': opacity
         };
         const color_interpolation_for_rgb = [
             'rgb', 
@@ -192,6 +209,8 @@ export class MuniState extends State {
             // rgb display that uses 3 values
             paint_definition = paint_definitions_for_rgb;
         }
+
+        return paint_definition;
     }
 
     override handleData(data: any[][]) {
