@@ -3,14 +3,14 @@ import { MUNI_FILTER_ITEMS, QP_REGION_COLORING, QP_REGION_COLORING_CAR, REGION_C
 
 export class MuniState extends State {
     constructor(id: string, filters: any) {
-        // hack: if you manually add "opacity=0.6" or any other value to URL, we use that value for opacity
-        let manual_opacity = -1;
-        if (filters["opacity"]) {
-            manual_opacity = Number(filters["opacity"]);
-            if (!(manual_opacity > 0 && manual_opacity <= 1)) {
-                manual_opacity = -1;
-            }
-        }
+        // // hack: if you manually add "opacity=0.6" or any other value to URL, we use that value for opacity
+        // let manual_opacity = -1;
+        // if (filters["opacity"]) {
+        //     manual_opacity = Number(filters["opacity"]);
+        //     if (!(manual_opacity > 0 && manual_opacity <= 1)) {
+        //         manual_opacity = -1;
+        //     }
+        // }
         
         super('muni', id, filters);
         console.log('MuniState constructor STARTED');
@@ -37,19 +37,7 @@ export class MuniState extends State {
         this.legend = REGION_COLORING_LEGEND[coloring];
         this.filterItems = MUNI_FILTER_ITEMS;
 
-        // use this to override the default opacity which is given in the constructor of legend
-        if (this.legend) {
-            this.legend.opacity = 0.9;
-            console.log('setting legend.opacity to ' + this.legend.opacity);
-        }
-        
-        let opacity = this.legend.opacity;
-        console.log('this.legend.opacity=' + opacity);
-        if (manual_opacity !== -1) {
-            console.log('overriding opacity with ', manual_opacity);
-            opacity = manual_opacity;
-        }
-        
+        const opacity = this.setLegendOpacity(this.manual_opacity);
         const paint_definition = this.calculate_paint_definition(coloring, opacity); // <== this defines the colors of the polygons according to the display selected in the drop-down
 
         const muni_filter_def = this.calc_filter(); // <== this filter causes map to display only the polygon of the city (whose id is in the URL)
@@ -133,113 +121,7 @@ export class MuniState extends State {
         return filter;
     }
 
-    calculate_paint_definition(coloring: string, opacity : number) {
-        const color_interpolation_for_vegetation = [
-            'interpolate', ['exponential', 0.01], ['get', 'VegFrac'],
-            0, ['to-color', '#ccc'],
-            0.5, ['to-color', '#acecc2'],
-            0.6, ['to-color', '#155b2e'],
-        ];
 
-        const color_step_for_vegetation = [
-            'step',
-            ['get', 'VegFrac'],
-            ['to-color', '#D9D9D9'],
-            0.001,
-            ['to-color', '#BBDFC3'],
-            0.40,
-            ['to-color', '#90B192'],
-            0.50,
-            ['to-color', '#6D8F6E'],
-            0.60,
-            ['to-color', '#4D734E'],
-            0.80,
-            ['to-color', '#2B5B34']
-        ];
-
-        const color_interpolation_for_temperature = [
-            'interpolate', ['exponential', 0.01], ['get', 'Temperatur'],
-            //'interpolate', ['exponential', 0.99], ['get', 'Temperatur'],
-            30, ['to-color', '#FFFF00'],
-            35, ['to-color', '#FFA500'],
-            40, ['to-color', '#FF0000'],
-        ];
-
-        const color_step_for_temperature = [
-            'step',
-            ['get', 'Temperatur'],
-            ['to-color', '#D9D9D9'],
-            30,
-            ['to-color', '#F7DEDF'],
-            33,
-            ['to-color', '#EDB1B2'],
-            34,
-            ['to-color', '#E58586'],
-            35,
-            ['to-color', '#DE5959'],
-            37,
-            ['to-color', '#EC1E26']
-        ];
-
-        const color_interpolation_for_cluster = [
-                    'match', ['coalesce', ['get', 'cluster17'], 0],
-                    0, ['to-color', '#9BD7F5'],
-                    1, ['to-color', '#9BD7F5'],
-                    2, ['to-color', '#89C8EE'],
-                    3, ['to-color', '#78BBE7'],
-                    4, ['to-color', '#66AFE1'],
-                    5, ['to-color', '#54A4DB'],
-                    6, ['to-color', '#497DB0'],
-                    7, ['to-color', '#3C5E91'],
-                    8, ['to-color', '#314177'],
-                    9, ['to-color', '#272361'],
-                    ['to-color', '#1E1E4D'],
-                ];
-
-        console.log('using opacity ', opacity);
-        const paint_definitions_for_temperature = {
-            'fill-color': color_step_for_temperature,
-            //'fill-color': color_interpolation_for_temperature,
-            'fill-opacity': opacity
-        };
-        const paint_definitions_for_vegetation = {
-            'fill-color': color_step_for_vegetation,
-            //'fill-color': color_interpolation_for_vegetation,
-            'fill-opacity': opacity
-        };
-        const paint_definitions_for_cluster = {
-            'fill-color': color_interpolation_for_cluster,
-            'fill-opacity': opacity
-        };
-        const color_interpolation_for_rgb = [
-            'rgb', 
-            [ "-", 255, ["*", 21.25, ["-", 42, ['coalesce', ['get', 'Temperatur'], 32.0] ]]],   
-            ["*", 255, ['coalesce', ['get', 'VegFrac'], 0.001] ],
-            ["*", 25, ['coalesce', ['get', 'cluster17'], 0] ]
-        ];
-
-        const paint_definitions_for_rgb = {
-            'fill-color': color_interpolation_for_rgb,
-            'fill-opacity': 0.6
-        };
-
-        let paint_definition = null;
-        if (coloring==='vegetation') { 
-            paint_definition = paint_definitions_for_vegetation;
-        }
-        else if (coloring==='temperature') {
-            paint_definition = paint_definitions_for_temperature;
-        }
-        else if (coloring==='cluster') {
-            paint_definition = paint_definitions_for_cluster;
-        }
-        else if (coloring=== 'all') {
-            // rgb display that uses 3 values
-            paint_definition = paint_definitions_for_rgb;
-        }
-
-        return paint_definition;
-    }
 
     override handleData(data: any[][]) {
         if (data[0].length && data[0][0]) {

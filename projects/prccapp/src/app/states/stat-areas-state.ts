@@ -40,7 +40,7 @@ export class StatAreasState extends State {
             ]
         }
 
-        const paint_definition = this.calculate_paint_definition(coloring);
+        const paint_definition = this.calculate_paint_definition_stat_area(coloring);
         /**
          * This is the layer of the Settlements Data
          * Its paint_definition defines the colors of the different polygons based on the
@@ -127,110 +127,96 @@ export class StatAreasState extends State {
         }
     }
 
-    calculate_paint_definition(coloring: string) {
-        const color_interpolation_for_vegetation = [
-            'interpolate', ['exponential', 0.01], ['get', 'VegFrac'],
-            0, ['to-color', '#ccc'],
-            0.5, ['to-color', '#acecc2'],
-            0.6, ['to-color', '#155b2e'],
-        ];
+    // calculate_paint_definition_stat_area(coloring: string) {
+    //     const color_step_for_vegetation = [
+    //         'step',
+    //         ['get', 'VegFrac'],
+    //         ['to-color', '#D9D9D9'],
+    //         0.001,
+    //         ['to-color', '#BBDFC3'],
+    //         0.20,
+    //         ['to-color', '#90B192'],
+    //         0.40,
+    //         ['to-color', '#6D8F6E'],
+    //         0.60,
+    //         ['to-color', '#4D734E'],
+    //         0.80,
+    //         ['to-color', '#2B5B34']
+    //     ];
 
-        const color_step_for_vegetation = [
-            'step',
-            ['get', 'VegFrac'],
-            ['to-color', '#D9D9D9'],
-            0.001,
-            ['to-color', '#BBDFC3'],
-            0.20,
-            ['to-color', '#90B192'],
-            0.40,
-            ['to-color', '#6D8F6E'],
-            0.60,
-            ['to-color', '#4D734E'],
-            0.80,
-            ['to-color', '#2B5B34']
-        ];
+    //     const color_step_for_temperature = [
+    //         'step',
+    //         ['get', 'median_tem'],
+    //         ['to-color', '#D9D9D9'],
+    //         30,
+    //         ['to-color', '#F7DEDF'],
+    //         33,
+    //         ['to-color', '#EDB1B2'],
+    //         34,
+    //         ['to-color', '#E58586'],
+    //         35,
+    //         ['to-color', '#DE5959'],
+    //         37,
+    //         ['to-color', '#EC1E26']
+    //     ];
 
-        const color_interpolation_for_temperature = [
-            'interpolate', ['exponential', 0.01], ['get', 'median_tem'],
-            30, ['to-color', '#FFFF00'],
-            35, ['to-color', '#FFA500'],
-            40, ['to-color', '#FF0000'],
-        ];
+    //     const color_interpolation_for_cluster = [
+    //                 'match', ['coalesce', ['get', 'cluster'], 0],
+    //                 0, ['to-color', '#9BD7F5'],
+    //                 1, ['to-color', '#9BD7F5'],
+    //                 2, ['to-color', '#89C8EE'],
+    //                 3, ['to-color', '#78BBE7'],
+    //                 4, ['to-color', '#66AFE1'],
+    //                 5, ['to-color', '#54A4DB'],
+    //                 6, ['to-color', '#497DB0'],
+    //                 7, ['to-color', '#3C5E91'],
+    //                 8, ['to-color', '#314177'],
+    //                 9, ['to-color', '#272361'],
+    //                 ['to-color', '#1E1E4D'],
+    //             ];
 
-        const color_step_for_temperature = [
-            'step',
-            ['get', 'median_tem'],
-            ['to-color', '#D9D9D9'],
-            30,
-            ['to-color', '#F7DEDF'],
-            33,
-            ['to-color', '#EDB1B2'],
-            34,
-            ['to-color', '#E58586'],
-            35,
-            ['to-color', '#DE5959'],
-            37,
-            ['to-color', '#EC1E26']
-        ];
+    //     const paint_definitions_for_temperature = {
+    //         'fill-color': color_step_for_temperature,
+    //         'fill-opacity': 0.6
+    //     };
+    //     const paint_definitions_for_vegetation = {
+    //         'fill-color': color_step_for_vegetation,
+    //         'fill-opacity': 0.6
+    //     };
+    //     const paint_definitions_for_cluster = {
+    //         'fill-color': color_interpolation_for_cluster,
+    //         'fill-opacity': 0.6
+    //     };
 
-        const color_interpolation_for_cluster = [
-                    'match', ['coalesce', ['get', 'cluster'], 0],
-                    0, ['to-color', '#9BD7F5'],
-                    1, ['to-color', '#9BD7F5'],
-                    2, ['to-color', '#89C8EE'],
-                    3, ['to-color', '#78BBE7'],
-                    4, ['to-color', '#66AFE1'],
-                    5, ['to-color', '#54A4DB'],
-                    6, ['to-color', '#497DB0'],
-                    7, ['to-color', '#3C5E91'],
-                    8, ['to-color', '#314177'],
-                    9, ['to-color', '#272361'],
-                    ['to-color', '#1E1E4D'],
-                ];
+    //     const color_interpolation_for_rgb = [
+    //         'rgb', 
+    //         [ "-", 255, ["*", 21.25, ["-", 42, ['coalesce', ['get', 'median_tem'], 32.0] ]]],   
+    //         ["*", 255, ['coalesce', ['get', 'VegFrac'], 0.001] ],
+    //         ["*", 25, ['coalesce', ['get', 'cluster'], 0] ]
+    //     ];
 
-        const paint_definitions_for_temperature = {
-            'fill-color': color_step_for_temperature,
-            'fill-opacity': 0.6
-        };
-        const paint_definitions_for_vegetation = {
-            'fill-color': color_step_for_vegetation,
-            'fill-opacity': 0.6
-        };
-        const paint_definitions_for_cluster = {
-            'fill-color': color_interpolation_for_cluster,
-            'fill-opacity': 0.6
-        };
-
-        const color_interpolation_for_rgb = [
-            'rgb', 
-            [ "-", 255, ["*", 21.25, ["-", 42, ['coalesce', ['get', 'median_tem'], 32.0] ]]],   
-            ["*", 255, ['coalesce', ['get', 'VegFrac'], 0.001] ],
-            ["*", 25, ['coalesce', ['get', 'cluster'], 0] ]
-        ];
-
-        const paint_definitions_for_rgb = {
-            'fill-color': color_interpolation_for_rgb,
-            'fill-opacity': 0.6
-        };
+    //     const paint_definitions_for_rgb = {
+    //         'fill-color': color_interpolation_for_rgb,
+    //         'fill-opacity': 0.6
+    //     };
         
-        let paint_definition = null;
-        if (coloring==='vegetation') { 
-            paint_definition = paint_definitions_for_vegetation;
-        }
-        else if (coloring==='temperature') {
-            paint_definition = paint_definitions_for_temperature;
-        }
-        else if (coloring==='cluster') {
-            paint_definition = paint_definitions_for_cluster;
-        }
-        else if (coloring=== 'all') {
-            // rgb display that uses 3 values
-            paint_definition = paint_definitions_for_rgb;
-        }
+    //     let paint_definition = null;
+    //     if (coloring==='vegetation') { 
+    //         paint_definition = paint_definitions_for_vegetation;
+    //     }
+    //     else if (coloring==='temperature') {
+    //         paint_definition = paint_definitions_for_temperature;
+    //     }
+    //     else if (coloring==='cluster') {
+    //         paint_definition = paint_definitions_for_cluster;
+    //     }
+    //     else if (coloring=== 'all') {
+    //         // rgb display that uses 3 values
+    //         paint_definition = paint_definitions_for_rgb;
+    //     }
 
-        return paint_definition;
-    }
+    //     return paint_definition;
+    // }
 
     override handleData(data: any[][]) {
         this.charts = [];
