@@ -22,7 +22,11 @@ export class LegendItem {
 }
 
 export class Legend {
-    constructor(public title: string, public items: LegendItem[], public tooltip?: string, public displayTitle = false) {}
+    constructor(public title: string, 
+                public items: LegendItem[], 
+                public tooltip?: string, 
+                public displayTitle = false,
+                public opacity : number = 0.6) {}
 }
 
 export class FilterOption {

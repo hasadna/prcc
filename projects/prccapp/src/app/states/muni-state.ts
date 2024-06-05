@@ -37,11 +37,27 @@ export class MuniState extends State {
         this.legend = REGION_COLORING_LEGEND[coloring];
         this.filterItems = MUNI_FILTER_ITEMS;
 
-        const paint_definition = this.calculate_paint_definition(coloring, manual_opacity); // <== this defines the colors of the polygons according to the display selected in the drop-down
+        // use this to override the default opacity which is given in the constructor of legend
+        if (this.legend) {
+            this.legend.opacity = 0.9;
+            console.log('setting legend.opacity to ' + this.legend.opacity);
+        }
+        
+        let opacity = this.legend.opacity;
+        console.log('this.legend.opacity=' + opacity);
+        if (manual_opacity !== -1) {
+            console.log('overriding opacity with ', manual_opacity);
+            opacity = manual_opacity;
+        }
+        
+        const paint_definition = this.calculate_paint_definition(coloring, opacity); // <== this defines the colors of the polygons according to the display selected in the drop-down
+
         const muni_filter_def = this.calc_filter(); // <== this filter causes map to display only the polygon of the city (whose id is in the URL)
         this.layerConfig['prcc-settlements-data'] = new LayerConfig(muni_filter_def, paint_definition, null);
 
         this.handle_background_layers('bglayers');
+
+        //this.legend.opacity = 0.1;
     }
     
     handle_background_layers(layer_query_param_name : string) {
@@ -117,12 +133,28 @@ export class MuniState extends State {
         return filter;
     }
 
-    calculate_paint_definition(coloring: string, manual_opacity : number) {
+    calculate_paint_definition(coloring: string, opacity : number) {
         const color_interpolation_for_vegetation = [
             'interpolate', ['exponential', 0.01], ['get', 'VegFrac'],
             0, ['to-color', '#ccc'],
             0.5, ['to-color', '#acecc2'],
             0.6, ['to-color', '#155b2e'],
+        ];
+
+        const color_step_for_vegetation = [
+            'step',
+            ['get', 'VegFrac'],
+            ['to-color', '#D9D9D9'],
+            0.001,
+            ['to-color', '#BBDFC3'],
+            0.40,
+            ['to-color', '#90B192'],
+            0.50,
+            ['to-color', '#6D8F6E'],
+            0.60,
+            ['to-color', '#4D734E'],
+            0.80,
+            ['to-color', '#2B5B34']
         ];
 
         const color_interpolation_for_temperature = [
@@ -164,11 +196,6 @@ export class MuniState extends State {
                     ['to-color', '#1E1E4D'],
                 ];
 
-        let opacity = 0.6;
-        if (manual_opacity !== -1) {
-            console.log('overriding opacity with', manual_opacity);
-            opacity = manual_opacity;
-        }
         console.log('using opacity ', opacity);
         const paint_definitions_for_temperature = {
             'fill-color': color_step_for_temperature,
@@ -176,7 +203,8 @@ export class MuniState extends State {
             'fill-opacity': opacity
         };
         const paint_definitions_for_vegetation = {
-            'fill-color': color_interpolation_for_vegetation,   // ToDo change to step
+            'fill-color': color_step_for_vegetation,
+            //'fill-color': color_interpolation_for_vegetation,
             'fill-opacity': opacity
         };
         const paint_definitions_for_cluster = {

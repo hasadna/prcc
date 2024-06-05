@@ -18,8 +18,12 @@ export class MunisState extends State {
                 manual_opacity = -1;
             }
         }
+
+
         // the filters arg contains the URL part that represents the drop-down selection!
         super('munis', undefined, filters);
+
+
         let layerFilters: any[][] = [];
 
         let seiCondition = 'TRUE';
@@ -77,8 +81,20 @@ export class MunisState extends State {
             ]//stat-areas-fill
         }
 
+        // use this to override the default opacity which is given in the constructor of legend
+        if (this.legend) {
+            this.legend.opacity = 0.9;
+            console.log('setting legend.opacity to ' + this.legend.opacity);
+        }
+        
+        let opacity = this.legend.opacity;
+        console.log('this.legend.opacity=' + opacity);
+        if (manual_opacity !== -1) {
+            console.log('overriding opacity with ', manual_opacity);
+            opacity = manual_opacity;
+        }
 
-        const paint_definition = this.calculate_paint_definition(coloring, manual_opacity);
+        const paint_definition = this.calculate_paint_definition(coloring, opacity);
         /**
          * This is the layer of the Settlements Data
          * Its paint_definition defines the colors of the different polygons based on the
@@ -99,6 +115,7 @@ export class MunisState extends State {
         };
 
         this.handle_background_layers('bglayers');
+
     }
 
     handle_background_layers(layer_query_param_name : string) {
@@ -163,7 +180,7 @@ export class MunisState extends State {
         }
     }
 
-    calculate_paint_definition(coloring: string, manual_opacity : number) {
+    calculate_paint_definition(coloring: string, opacity : number) {
         const color_interpolation_for_vegetation = [
             'interpolate', ['exponential', 0.01], ['get', 'VegFrac'],
             0, ['to-color', '#ccc'],
@@ -226,11 +243,6 @@ export class MunisState extends State {
                     ['to-color', '#1E1E4D'],
                 ];
 
-        let opacity = 0.6;
-        if (manual_opacity !== -1) {
-            console.log('overriding opacity with', manual_opacity);
-            opacity = manual_opacity;
-        }
         console.log('using opacity ', opacity);
         const paint_definitions_for_temperature = {
             'fill-color': color_step_for_temperature,
