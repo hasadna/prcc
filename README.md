@@ -1,5 +1,5 @@
 # prcc
-PRCC front-end app
+PRCC front-end app - by HaSadna
 
 This project was started based on [Treebase application](https://github.com/hasadna/treebase-app) by Adam Kariv.
 
