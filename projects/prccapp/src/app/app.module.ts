@@ -13,6 +13,7 @@ import { MunisComponent } from './munis/munis.component';
 import { MuniComponent } from './muni/muni.component';
 import { AboutComponent } from './about/about.component';
 import { OdotComponent } from './odot/odot.component';
+import { MethodologyComponent } from './methodology/methodology.component';
 import { TreesComponent } from './trees/trees.component';
 import { StatAreaComponent } from './stat-area/stat-area.component';
 import { StatAreasComponent } from './stat-areas/stat-areas.component';
@@ -29,6 +30,7 @@ import { TreeLegendComponent } from './tree-legend/tree-legend.component';
     AppComponent,
     AboutComponent,
     OdotComponent,
+    MethodologyComponent,
     HeaderComponent,
     MapComponent,
     ContentComponent,

@@ -1,0 +1,72 @@
+<div class='backdrop'>
+    <a routerLink='/munis' queryParamsHandling='merge'></a>
+</div>
+<div class='about'>
+    <div class="info">
+        <h1>מתודולוגיה</h1>
+        אנו עושים שימוש בתצוגת RGB (אדום, ירוק וכחול) ככלי ויזואליזציה של המצב הקיים אותו אנו מאפיינים בעזרת שלשה מדדים - שני מדדים סביבתיים מנתוני לוויינים: טמפרטורה (אי החום העירוני) וכיסוי צומח אנו מציגים באדום (טמפרטורה) וירוק (כיסוי צומח) ומדד (אשכול) כלכלי חברתי אותו אנו מציגים בכחול. תצוגה זו מאפשרת להבחין בפערים חברתיים-כלכליים והקשר לאי שוויון סביבתי בין ערים ובין שכונות בעיר: לרוב בשכונות מאוד עמידיות (כחול גבוה) כיסוי הצומח הוא גבוה (ירוק גבוה), ובהתאם הטמפרטורה יותר נמוכה (אדום נמוך) ושילוב של שלשתם יתן גוון טורקיז, ואילו בשכונות באשכול כלכלי חברתי נמוך (כחול נמוך), במקרים רבים גם כיסוי הצומח יותר נמוך (ירוק נמוך) ובהתאם הטמפרטורה יותר גבוהה (אדום גבוה) ושילוב של שלשתם יתן גוון אדום.
+
+<br><br>
+<h2>
+        הערכות השפעת שינוי כיסוי צומח על סביבה, בריאות, וכלכלה
+</h2>        
+            <strong>
+סביבה - 
+            </strong>
+השפעת שינוי כיסוי הצומח על טמפרטורת פני השטח חושבה בעזרת רגרסיה לינארית מול
+ אחוז כיסוי הצומח שחושב מהלוויין Sentinel-2 
+ברזולוציה מרחבית של 10 מ׳ 
+(הרגרסיה חושבה לאזור גוש דן, בהמשך שכבת טמפרטורת פני השטח תוחלף בטמפרטורת אוויר והרגרסיה תורחב לכל הארץ).
+
+<strong>
+    בריאות - 
+</strong>
+
+    חישוב מקרי תמותה מוקדמת ותחלואה שנמנעים כתוצאה מחשיפה לצמחייה נעשה באמצעות גישת
+ "תסקיר השפעה על הבריאות"-HIA. 
+ בגישה זו, נעשה שימוש בנתוני תמותה ותחלואת רקע מישראל ומדדי קשר בין חשיפה לצמחייה ותחלואה שהתפרסמו על האוכלוסייה בישראל ומחקרי ענק מהעולם. 
+ הגישה מאפשרת ל"תרגם" את ההשפעה של שינוי בחשיפה לצמחייה לשינוי בתחלואה, 
+ במספר מקרי סרטן שניתן למנוע או הפחתה במספר הלידות של תינוקות מתחת ל 2.5 ק"ג (תינוקות במשקל לידה נמוך-LBW).
+
+ <strong>
+ כלכלה - 
+</strong>
+ 
+ לצמחייה יש יתרונות רבים שניתן לכמת באופן כלכלי כמו שיפור איכות האוויר, הפחתת רעש, נוף וערך אסתטי, הפחתת אפקט אי-החום העירוני, יצירת אפשרות לפנאי ועוד. 
+ השפעה כלכלית זו הוערכה באמצעות מודל מחירים הדוניים של נדל"ן. 
+ גישה זו נחשבת יעילה שכן היא מנצלת את מחירי השוק של נכסי נדל"ן כדי לחלץ את הערך שמיוחס לצמחייה. 
+ הערך הכלכלי של צמחייה שמגולם במחירי הנדל"ן מעיד על גם על החשיבות שהציבור מייחס לצמחייה כחלק מתשתיות עירוניות ותכנון סביבתי. 
+ לשם אמידת המחירים ההדוניים השתמשנו במודל סטטיסטי שמנתח את השפעת הצמחייה על מחירי עסקאות בעבר.  סט הנתונים כלל נתוני עסקאות נדל"ן מ- 2017 וכלל מלבד מחיר העסקה גם מידע מפורט על הנכס, כגון שטח הבית או הדירה, מספר הקומות, מעלית, שנת בנייה ומאפיינים נוספים. ערכי הצמחייה ברדיוס של 400 מטר מהבית/דירה צורפו לכל תצפית על סמך נתוני לוויין שנתיים מקבוצת הלוויינים סנטינל-2. באמצעות הכללת משתני הצמחייה NDVI באינטראקציה עם האשכולות הסציוכלכליים השונים, ניתן היה לחלץ את הקשר בין ערך הנדל"ן לבין מדד הצמחייה בחתכים שונים. חשוב לציין כי המקדמים שמייצגים את הקשר בין השינוי ב- NDVI לבין השינוי בערך נכסי המגורים באזור הם הערכה שמרנית, באשר הם מבוססים על כל סוגי הצמחייה כולל שיחים דשא ושטחים טבעיים ירוקים. אם המידע על פיו ביצענו את הניתוח היה מבוסס על עצים בלבד, הערכים היו גבוהים יותר (זאת בהתאם לספרות בנושא).   
+
+<h2></h2>
+<div dir="ltr" class="info">
+ Vegetation offers numerous benefits that can be quantified economically, such as improving air quality, 
+ reducing noise, providing aesthetic value and landscape, mitigating the urban heat island effect, 
+ and creating recreational opportunities. 
+ This economic impact was assessed using a hedonic pricing model for real estate. 
+ This approach is considered efficient as it leverages market prices of real estate properties to extract the 
+ value attributed to vegetation. 
+ The economic value of vegetation embedded in real estate prices also indicates the importance that 
+ the public attaches to vegetation as part of urban infrastructure and environmental planning.
+ 
+ To estimate hedonic prices, we used a statistical model that analyzes the impact of vegetation on past transaction prices. 
+ The dataset included real estate transaction data from 2017 and, in addition to the transaction price, 
+ detailed information on the property, such as the area of the house or apartment, 
+ number of floors, elevator, year of construction, and other characteristics. 
+ 
+ Vegetation values within a 400-meter radius of the house/apartment were attached to each observation 
+ based on annual satellite data from the Sentinel-2 constellation. 
+ By including NDVI vegetation variables in interaction with the different socioeconomic clusters, 
+ it was possible to extract the relationship between property value and the vegetation index in various segments. 
+ It is important to note that the coefficients representing the relationship between the change in NDVI and the 
+ change in the value of residential properties in the area represent a conservative estimate, 
+ as they are based on all vegetation types including shrubs, grass, and natural green areas. 
+ If the information on which we performed the analysis were based on trees only, 
+ the values ​​would be higher (this is in accordance with the literature on the subject).
+</div>
+            <p>
+            האתר פותח ע"י <a href="https://www.hasadna.org.il/"> הסדנה לידע ציבורי</a>.
+        </p>
+                <a class='entry' routerLink='/munis'>כניסה&nbsp;&gt;</a>
+    </div>
+</div>

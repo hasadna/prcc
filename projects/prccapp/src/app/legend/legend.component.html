@@ -1,26 +1,29 @@
 <!-- <h2 *ngIf='legend.tooltip' [matTooltip]='legend.tooltip' class='tooltip'>{{legend.title}}</h2> 
 <h2 *ngIf='!legend.tooltip'>{{legend.title}}</h2> -->
 <div *ngIf='legend.tooltip' [matTooltip]='legend.tooltip' class='tooltip'>
-<div class='items'>
-    <div class='item' *ngFor='let item of legend.items' [class.separated]='item.separated'>
-        <div *ngIf='!item.separated && !item.label_on_color' class='item' [style.flex-direction]='item.direction'>
-            <div class='color' [style.backgroundColor]='item.color' [style.opacity]='legend.opacity'></div>
-            <div class='label' [class.scaled]='item.scaled'>{{item.label}}</div>
+    <div class='items'>
+        <div class='item' *ngFor='let item of legend.items' [class.separated]='item.separated'>
+            <div *ngIf='!item.separated && !item.label_on_color' class='item' [style.flex-direction]='item.direction'>
+                <div class='color' [style.backgroundColor]='item.color' [style.opacity]='legend.opacity'></div>
+                <div class='label' [class.scaled]='item.scaled'>{{item.label}}</div>
+            </div>
+            <div *ngIf='!item.separated && item.label_on_color' class='item color label' 
+                [style.backgroundColor]='item.color' [style.opacity]='legend.opacity' style="color: white; font-size: 12px; padding-right: 40%">
+                {{item.label}}
+                
+            </div>
         </div>
-        <div *ngIf='!item.separated && item.label_on_color' class='item color label' 
-            [style.backgroundColor]='item.color' [style.opacity]='legend.opacity' style="color: white; font-size: 12px; padding-right: 40%">
-            {{item.label}}
-            
+        <div *ngIf='legend.displayTitle'>{{legend.title}}</div>    
+    </div>
+    <div class="items">
+        <div class='item1' *ngFor='let item of legend.items'  >
+            <div *ngIf='item.separated' class='item'>
+                <div class='color' [style.backgroundColor]='item.color'></div>
+                <div class='label' [class.scaled]='item.scaled'>{{item.label}}</div>
+            </div>
         </div>
     </div>
-    <div *ngIf='legend.displayTitle'>{{legend.title}}</div>    
-</div>
-<div class="items">
-    <div class='item1' *ngFor='let item of legend.items'  >
-        <div *ngIf='item.separated' class='item'>
-            <div class='color' [style.backgroundColor]='item.color'></div>
-            <div class='label' [class.scaled]='item.scaled'>{{item.label}}</div>
-        </div>
+    <div *ngIf='legend.image'>
+        <img [src]="legend.image" alt="legend">
     </div>
-</div>
 </div>

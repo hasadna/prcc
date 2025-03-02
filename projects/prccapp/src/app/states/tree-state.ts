@@ -1,5 +1,5 @@
-import { State, LayerConfig } from "./base-state";
-import { QP_TREE_STATUS, QP_TREE_STATUS_ALL, QP_TREE_STATUS_CERTAIN, QP_TREE_STATUS_FILTER, TREE_COLOR_INTERPOLATE, TREE_COLOR_LEGEND, TREE_FILTER_ITEMS } from "./consts-trees";
+import { State, LayerConfig, Legend } from "./base-state";
+import { QP_TREE_STATUS, QP_TREE_STATUS_ALL, QP_TREE_STATUS_CERTAIN, QP_TREE_STATUS_FILTER, TREE_COLOR_INTERPOLATE, TREE_FILTER_ITEMS } from "./consts-trees";
 
 export class TreeState extends State {
     constructor(id: string, filters: any) {

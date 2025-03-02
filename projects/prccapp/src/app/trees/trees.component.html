@@ -1,11 +1,32 @@
 <app-content mode='trees' [init]='!!state' (state)='state = $event'>
     <app-summary *ngIf='state' [state]='state'>
-        <div class='icon-infos'>
-            <div class='icon-info big'>
-                <div class='text'>
-                    <h2>תמונות לוויין</h2>
-                </div>
+        <div class='c1'>
+            <h1 class='c2'>תמונות לוויין</h1>
+            <div class='c3_regular'>
+                <div class='c3_bold c3_green'>
+                אנו משתמשים בנתוני לוויין Landsat של NASA (רזולוציה של 30 מ׳).
+            </div><br/>
+            <span>
+                <span class="c3_bold">
+טמפרטורת פני השטח 
+</span>
+מוצגת כעת ותוחלף בהמשך בטמפרטורת אוויר בגובה 2 מ׳ באמצעות למידה עמוקה.
+</span><br><br>
+<span>
+    <span class="c3_bold">
+כיסוי הצומח 
+</span>
+מחושב באמצעות NDVI, המתבסס על החזרת קרינת השמש בתחומים הנראה והאינפרא-אדום הקרוב.
+</span><br><br>
+<span><span class="c3_bold">
+צילום לוויין – 
+</span>
+תמונה דיגיטלית הדומה לצילומי אוויר.
+</span>
+
+                <span></span><br/>
             </div>
-        </div>    
+        </div>
+    
     </app-summary>
 </app-content>

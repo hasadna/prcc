@@ -26,7 +26,9 @@ export class Legend {
                 public items: LegendItem[], 
                 public tooltip?: string, 
                 public displayTitle = false,
-                public opacity : number = 0.6) {}
+                public opacity : number = 0.6,
+                public image? : string
+            ) {}
 }
 
 export class FilterOption {
