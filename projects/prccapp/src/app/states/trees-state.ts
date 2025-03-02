@@ -141,7 +141,7 @@ export class TreesState extends State {
         //this.legend = TREE_COLOR_LEGEND;
         let path_legend_img : string = '';
         if (filters["rc"] === 'temperature') {
-            path_legend_img = '../assets/img/LST_Legend.jpg';
+            path_legend_img = '../../../assets/img/LST_Legend.jpg';
         }
         else if (filters["rc"] === 'vegetation') {
             path_legend_img = '../../assets/img/NDVI_Legend.jpg';
