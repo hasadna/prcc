@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AboutComponent } from './about/about.component';
 import { OdotComponent } from './odot/odot.component';
+import { KesherComponent } from './kesher/kesher.component';
 import { MethodologyComponent } from './methodology/methodology.component';
 import { TreesComponent } from './trees/trees.component';
 // import { TreeComponent } from './tree/tree.component';
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'stat-areas', component: StatAreasComponent },
   { path: 'stat-areas/:id', component: StatAreaComponent },
   { path: 'odot', component: OdotComponent },
+  { path: 'kesher', component: KesherComponent },
   { path: 'methodology', component: MethodologyComponent },
   { path: '', component: AboutComponent },
 ];
