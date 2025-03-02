@@ -144,7 +144,7 @@ export class TreesState extends State {
             path_legend_img = 'assets/img/LST_Legend.jpg';
         }
         else if (filters["rc"] === 'vegetation') {
-            path_legend_img = '../../assets/img/NDVI_Legend.jpg';
+            path_legend_img = 'assets/img/NDVI_Legend.jpg';
         }
         this.legend = new Legend('', [], 'מקרא: לוויין', true, 0.6, path_legend_img);
 
