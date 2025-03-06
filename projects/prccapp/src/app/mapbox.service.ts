@@ -7,8 +7,7 @@ import { ReplaySubject } from 'rxjs';
 })
 export class MapboxService {
 
-  //ACCESS_TOKEN = 'pk.eyJ1IjoiZXZ5YXRhcmsiLCJhIjoiY2xpdTM5NjlhMWtvNjNlbnhnYjM5bzFjcyJ9.sbPN3nwHUem6QtmtJpnXXw';  // ek
-  ACCESS_TOKEN = 'pk.eyJ1IjoiZXZ5YXRhcmszMTA4IiwiYSI6ImNsbmxqZmk2NzB2ZDMyanMzc2p3YTlpajMifQ.dmZ__h8Jz5hVfXxUquNULw';  // evyatark3108
+  ACCESS_TOKEN = 'pk.eyJ1IjoiaGFzYWRuYSIsImEiOiJjbTdkNGxocGowcDRxMnBzZmZ1dGpmNjJ1In0.4pe9hQ6O4lTToY-Ua2qL3w'; // hasadna account
 
   public init = new ReplaySubject<void>(1);
   public map: mapboxgl.Map;

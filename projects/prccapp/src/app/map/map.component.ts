@@ -15,8 +15,8 @@ import { ApiService } from '../api.service';
 export class MapComponent implements AfterViewInit{
 
   // if changing to a different account you need to change also the ACCESS TOKEN in MapboxService!!
-  STYLE = 'mapbox://styles/evyatark3108/clnljjtd7003i01plcccdek9h/draft'; // evyatark3108 prcc01
-
+  STYLE = 'mapbox://styles/hasadna/cm7x5oyss00rk01sddqkk6lg0';  // hasadna account
+  
   OWN_LAYERS = [
     'prcc-settlements-data',
     'prcc-statistical-areas',
@@ -27,8 +27,8 @@ export class MapComponent implements AfterViewInit{
     'trees', // yaad trees
     'canopies', // yaad chupot
     'lst-tiles-8-11',
-    'evyatark-lst-tiles-8-16',
-    'evyatark-ndvi-tiles-8-16',
+//    'evyatark-lst-tiles-8-16',
+//    'evyatark-ndvi-tiles-8-16',
     'satellite'
   ];
   CLICKS = [
