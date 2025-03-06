@@ -3,7 +3,7 @@ import * as Plot from '@observablehq/plot';
 import { State, LayerConfig, Chart, FilterOption, SelectFilterItem, MultipleSelectFilterItem, Legend } from "./base-state";
 import { TREE_COLOR_INTERPOLATE, QP_TREE_STATUS_CERTAIN, QP_TREE_STATUS_SUSPECTED, TREE_COLOR_LEGEND, TREE_FILTER_ITEMS, QP_CANOPIES, QP_CANOPIES_NONE, QP_CANOPIES_MATCHED, QP_CANOPIES_LIKELY, QP_CANOPIES_MATCHED_LIKELY, QP_TREE_STATUS, QP_TREE_STATUS_ALL, QP_TREE_STATUS_FILTER, QP_TREE_STATUS_UNREPORTED, QP_TREE_HEIGHT, QP_TREE_HEIGHT_ALL, QP_TREE_HEIGHT_WHERE, QP_TREE_HEIGHT_FILTERS, QP_BARK_DIAMETER, QP_BARK_DIAMETER_ALL, QP_BARK_DIAMETER_WHERE, QP_BARK_DIAMETER_FILTERS, QP_CANOPY_AREA, QP_CANOPY_AREA_ALL, QP_CANOPY_AREA_WHERE, QP_CANOPY_AREA_FILTERS } from './consts-trees';
 import {  SATELLITE_FILTER_ITEMS, STAT_AREA_FILTER_ITEMS } from './consts-regions'; // temporary!!
-
+import { LST_LAYER_NAME, NDVI_LAYER_NAME } from '../map/map.component';
 
 export class TreesState extends State {
     constructor(filters: any) {
@@ -19,10 +19,10 @@ export class TreesState extends State {
         // decide according to filter selection (2nd drop-down, reflects in the URL queryParams)
         // which of the 2 satellite images will be displayed
         if (this.filters.rc === 'temperature') {
-            layers.push('evyatark-lst-tiles-8-16');
+            layers.push(LST_LAYER_NAME);//'evyatark-lst-tiles-8-16');
         }
         else if (this.filters.rc === 'vegetation') {
-            layers.push('evyatark-ndvi-tiles-8-16');
+            layers.push(NDVI_LAYER_NAME);//'evyatark-ndvi-tiles-8-16');
         }
         else if (this.filters.rc === 'satellite') {
             layers.push('satellite');
@@ -54,22 +54,13 @@ export class TreesState extends State {
         //     this.layerConfig['canopies'].filter = canopiesFilter;
         // }
 
-        // for (const id in layers) {
-        //     if ((id === 'evyatark-lst-image-30') || (id === 'evyatark-ndv-image-30')
-        //     || (id === 'evyatark-lst-tiles-8-16')
-        //     ) {
-        //         if (this.layerConfig[id]) {
-        //             this.layerConfig[id].paint = {'raster-opacity': 0.3};
-        //         }
-        //     }
-        // }
-        if (this.layerConfig['evyatark-lst-tiles-8-16']) {
+        if (this.layerConfig[LST_LAYER_NAME]) {
             console.log('trees state, lst-tiles-8-16 layer, set raster-opacity');
-            this.layerConfig['evyatark-lst-tiles-8-16'].paint = {'raster-opacity': 0.7};
+            this.layerConfig[LST_LAYER_NAME].paint = {'raster-opacity': 0.7};
         }
-        if (this.layerConfig['evyatark-ndvi-tiles-8-16']) {
+        if (this.layerConfig[NDVI_LAYER_NAME]) {
             console.log('trees state, ndvi-tiles-8-16 layer, set raster-opacity');
-            this.layerConfig['evyatark-ndvi-tiles-8-16'].paint = {'raster-opacity': 0.7};
+            this.layerConfig[NDVI_LAYER_NAME].paint = {'raster-opacity': 0.7};
         }
 
         // this.layerConfig['trees'].paint = {

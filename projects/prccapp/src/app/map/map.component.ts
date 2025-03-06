@@ -6,6 +6,9 @@ import { StateService } from '../state.service';
 import { Router } from '@angular/router';
 import { ApiService } from '../api.service';
 
+export const LST_LAYER_NAME = 'hasadna-lst-image-30';
+export const NDVI_LAYER_NAME = 'hasadna-ndvi-image-30';
+
 @UntilDestroy()
 @Component({
   selector: 'app-map',
@@ -16,7 +19,6 @@ export class MapComponent implements AfterViewInit{
 
   // if changing to a different account you need to change also the ACCESS TOKEN in MapboxService!!
   STYLE = 'mapbox://styles/hasadna/cm7x5oyss00rk01sddqkk6lg0';  // hasadna account
-  
   OWN_LAYERS = [
     'prcc-settlements-data',
     'prcc-statistical-areas',
@@ -29,6 +31,7 @@ export class MapComponent implements AfterViewInit{
     'lst-tiles-8-11',
 //    'evyatark-lst-tiles-8-16',
 //    'evyatark-ndvi-tiles-8-16',
+    LST_LAYER_NAME, NDVI_LAYER_NAME,
     'satellite'
   ];
   CLICKS = [
