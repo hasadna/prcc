@@ -212,34 +212,131 @@ export class RegionComponent implements OnChanges {
     const aoc = this.calculate_aoc(event.value);
     const sqm = this.record.SqM_Costs;
     const temperature_change = this.calculate_Temperature_change(event.value);
+    const house_price = this.calculate_hause_price(event.value);
+    const sickness = this.calculate_sickness(event.value);
     this.iconInfos2[1].value = event.value.toFixed(0) + '%';
     this.iconInfos3[0].value = String(temperature_change);
-    this.iconInfos3[1].value = '--';
-    this.iconInfos3[2].value = '--';
+    this.iconInfos3[1].value = String(house_price);
+    this.iconInfos3[2].value = String(sickness);
     this.iconInfos3[3].value = String(aoc);
   }
-  calculate_Temperature_change(slider_val_percents: number) {
-    const current_ndvi = this.record.VegFrac;
+
+  calculate_sickness(slider_val_percents: number) {
+    const current_vegFrac = this.record.VegFrac;
     const slider_val = slider_val_percents * 0.01 ;
-    const delta = slider_val - current_ndvi;
-    const slopet = this.record.SlopeT;
-    const temperature_change = (-1 * slopet * delta).toFixed(2);
+    const deltaVegFrac = slider_val - current_vegFrac;
+
+    const cancerFactors = [-3.222, -4.399, -3.8, -3.996, -5.237]
+    
+    //const deltaNvdi = this.record.EM * deltaVegFrac + 0.0579; // <== is this the correct calculation? using EM?
+    const deltaNvdi = 0.3616 * deltaVegFrac + 0.0579;           // or like this?
+
+    const rri1 = Math.exp(cancerFactors[0] * deltaNvdi);
+    const aoc1 = ((rri1 - 1) / rri1) * this.record["EM Breast Cancer"];
+
+    const rri2 = Math.exp(cancerFactors[1] * deltaNvdi);
+    const aoc2 = ((rri2 - 1) / rri2) * this.record["EM Lung Cancer"];
+
+    const rri3 = Math.exp(cancerFactors[2] * deltaNvdi);
+    const aoc3 = ((rri3 - 1) / rri3) * this.record["EM Melanoma"];
+
+    const rri4 = Math.exp(cancerFactors[3] * deltaNvdi);
+    const aoc4 = ((rri4 - 1) / rri4) * this.record["EM Prostate Cancer"];
+
+    const rri5 = Math.exp(cancerFactors[4] * deltaNvdi);
+    const aoc5 = ((rri5 - 1) / rri5) * this.record["EM Shalpoochit Hashetten Cancer"]; 
+
+    const aoc = (-1 * (aoc1 + aoc2 + aoc3 + aoc4 + aoc5)).toFixed(2) ;
+    
+    console.log("==> calculate_sickness, slider_val_percents=", slider_val_percents );
+    console.log('current_vegFrac=', current_vegFrac);
+    console.log('slider_val=', slider_val);
+    console.log('deltaVegFrac=', deltaVegFrac);
+    console.log('deltaNvdi=', deltaNvdi);
+
+    console.log('rri1=', rri1);
+    console.log('aoc1=', aoc1);
+    console.log('rri2=', rri2);
+    console.log('aoc2=', aoc2);
+    console.log('rri3=', rri3);
+    console.log('aoc3=', aoc3);
+    console.log('rri4=', rri4);
+    console.log('aoc4=', aoc4);
+    console.log('rri5=', rri5);
+    console.log('aoc5=', aoc5);
+
+    console.log('aoc=', aoc);
+
+    return aoc;
+  }
+
+  calculate_hause_price(slider_val_percents: number) {
+    const current_vegFrac = this.record.VegFrac;
+    const slider_val = slider_val_percents * 0.01 ;
+    const deltaVegFrac = slider_val - current_vegFrac;
+    const deltaNvdi = 0.3616 * deltaVegFrac + 0.0579
+
+    const cluster_factor_table = [];
+    const values = [0.0, 1.0216, 1.0216, 1.0135, 1.0135, 1.0141, 1.0141, 1.0116, 1.0116, 1.0158, 1.0158]
+    for (let i = 0; i < 11; i++) {
+      cluster_factor_table.push(values[i]);
+    }
+
+    const SA_mean_housing_value = this.record['Average Cost Per Sqm']
+    const Area_Hezi = this.record['mr_Banooy']
+
+    const housing_value_change_exact = SA_mean_housing_value * Area_Hezi * deltaNvdi * cluster_factor_table[this.record.cluster];
+    const housing_value_change = housing_value_change_exact.toFixed(2);
+
+    console.log("==> calculate_hause_price, slider_val_percents=", slider_val_percents );
+    console.log('current_vegFrac=', current_vegFrac);
+    console.log('slider_val=', slider_val);
+    console.log('deltaVegFrac=', deltaVegFrac);
+    console.log('deltaNvdi=', deltaNvdi);
+    console.log('SA_mean_housing_value=', SA_mean_housing_value);
+    console.log('Area_Hezi=', Area_Hezi);
+    console.log('deltaNvdi=', deltaNvdi);
+    console.log('this.record.cluster=', this.record.cluster);
+    console.log('cluster factor=', cluster_factor_table[this.record.cluster]);
+    console.log('housing_value_change=', housing_value_change);
+
+    return housing_value_change;
+  }
+
+  calculate_Temperature_change(slider_val_percents: number) {
+    const current_vegFrac = this.record.VegFrac;
+    const slider_val = slider_val_percents * 0.01 ;
+    const deltaVegFrac = slider_val - current_vegFrac;
+    const deltaNvdi = 0.3616 * deltaVegFrac + 0.0579
+
+    //const slopet = this.record.SlopeT;
+    const slopet = -2.814;  // instead of using the value from polygon, always use this constant value!
+    
+    const temperature_change = (-1 * slopet * deltaNvdi).toFixed(2);
+    console.log("==> calculate_Temperature_change, slider_val_percents=", slider_val_percents );
+    console.log('current_vegFrac=', current_vegFrac);
+    console.log('slider_val=', slider_val);
+    console.log('deltaVegFrac=', deltaVegFrac);
+    console.log('deltaNvdi=', deltaNvdi);
+    console.log('slopet=', slopet);
     console.log('temperature_change=', temperature_change);
     return temperature_change;
   }
 
   calculate_aoc(slider_val_percents: number) {
-    const current_ndvi = this.record.VegFrac;
+    const current_vegFrac = this.record.VegFrac;
     const slider_val = slider_val_percents * 0.01 ;
-    const delta = slider_val - current_ndvi;
-    const rri = Math.exp(-0.4082 * delta);
+    const deltaVegFrac = slider_val - current_vegFrac;
+    const deltaNvdi = 0.3616 * deltaVegFrac + 0.0579
+    const rri = Math.exp(-0.4082 * deltaNvdi);
     const pafi = (rri - 1) / rri ;
     const em = this.record.EM ;
     const aoc = (-1 * pafi * em).toFixed(2) ;
-    console.log("calculate_aoc, slider_val_percents=", slider_val_percents );
-    console.log('current_ndvi=', current_ndvi);
+    console.log("==> calculate_aoc, slider_val_percents=", slider_val_percents );
+    console.log('current_vegFrac=', current_vegFrac);
     console.log('slider_val=', slider_val);
-    console.log('delta=', delta);
+    console.log('deltaVegFrac=', deltaVegFrac);
+    console.log('deltaNvdi=', deltaNvdi);
     console.log('rri=', rri);
     console.log('pafi=', pafi);
     console.log('em=', em);
