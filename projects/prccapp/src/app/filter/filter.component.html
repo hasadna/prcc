@@ -1,4 +1,6 @@
-<div class='filter'>
+<div class='filter' 
+    [ngClass]="{'nodisplay': this.mode === 'odot'}" >
+    <!--the ngClass is used to remove the filter bar when user clicks the "odot" link -->
     <div class='selector'>
         <span [class]='"selected " + mode'></span>
         <a class='munis' [routerLink]='["/", "munis"]' [class.active]='mode === "munis"' queryParamsHandling='merge'>רשויות</a>

@@ -87,14 +87,14 @@ const ICON_INFOS3: IconInfo[] = [
   {
     text: 'חיסכון',
     icon: 'savings',
-    tooltip: 'בקרוב...',
+    tooltip: 'הזז את הסקרול לתוצאות',
     units: '',
     value: '--',
   },
   {
     text: 'מניעת תחלואה',
     icon: 'prevent-sickness',
-    tooltip: 'בקרוב...',
+    tooltip: 'הזז את הסקרול לתוצאות',
     units: '',
     value: '--',
   },
@@ -344,7 +344,3 @@ export class RegionComponent implements OnChanges {
     return aoc;
   }
 }
-function Exp(arg0: number) {
-  throw new Error('Function not implemented.');
-}
-

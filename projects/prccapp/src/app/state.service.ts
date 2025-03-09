@@ -73,6 +73,9 @@ export class StateService {
         state = new MunisState(queryParams);
       }
     }
+    if (segments[0] === 'odot') {
+      // remove the filter bar by changing .filter to display:none
+    }
     state = state || new State(mode, id, queryParams);
     this.init(state);
   }

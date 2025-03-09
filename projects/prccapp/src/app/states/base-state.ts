@@ -2,7 +2,7 @@ import { Observable, from, forkJoin, tap } from "rxjs";
 import { ApiService } from "../api.service";
 import { FocusMode } from "./focus-modes";
 
-export type StateMode = 'about' | 'trees' | 'tree' | 'stat-areas' | 'stat-area' | 'munis' | 'muni' | 'empty';
+export type StateMode = 'about' | 'trees' | 'tree' | 'stat-areas' | 'stat-area' | 'munis' | 'muni' | 'empty'|'odot';
 
 export type PopupLayerItem = {label: string, content: (f: any) => string};
 export type PopupLayers = {[key: string]: PopupLayerItem[]};
@@ -65,6 +65,7 @@ export class MultipleSelectFilterItem extends FilterItem {
         this.placeholder = placeholder;
     }
 }
+
 
 export class State {
 
@@ -338,5 +339,11 @@ export class State {
         }
         
         return opacity;
+    }
+}
+
+export class OdotState extends State {
+    constructor(filters: any) {
+        super('odot', undefined, filters);
     }
 }
