@@ -307,17 +307,17 @@ export class RegionComponent implements OnChanges {
     const current_vegFrac = this.record.VegFrac;
     const slider_val = slider_val_percents * 0.01 ;
     const deltaVegFrac = slider_val - current_vegFrac;
-    const deltaNvdi = 0.3616 * deltaVegFrac + 0.0579
+    //const deltaNvdi = 0.3616 * deltaVegFrac + 0.0579
 
     //const slopet = this.record.SlopeT;
     const slopet = -2.814;  // instead of using the value from polygon, always use this constant value!
     
-    const temperature_change = (-1 * slopet * deltaNvdi).toFixed(2);
+    const temperature_change = (-1 * slopet * deltaVegFrac).toFixed(2);
     console.log("==> calculate_Temperature_change, slider_val_percents=", slider_val_percents );
     console.log('current_vegFrac=', current_vegFrac);
     console.log('slider_val=', slider_val);
     console.log('deltaVegFrac=', deltaVegFrac);
-    console.log('deltaNvdi=', deltaNvdi);
+    //console.log('deltaNvdi=', deltaNvdi);
     console.log('slopet=', slopet);
     console.log('temperature_change=', temperature_change);
     return temperature_change;
