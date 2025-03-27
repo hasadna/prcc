@@ -38,7 +38,11 @@
     </div>
     
     <div class='sources section'>
-        <h2 class='tooltip' [matTooltip]='"השפעת ההתערבות על האיזור הסטטיסטי"'>השפעת ההתערבות על האיזור הסטטיסטי</h2>
+        <h2 class='tooltip' [matTooltip]='"לפי החלטת ממשלה 1022, יעד ההצללה הלאומי הוא 70%. להמרת כיסוי צומח להצללה יש לערוך חישובים נוספים"'>השפעת ההתערבות על האיזור הסטטיסטי</h2>
+        <div style="gap: 0px">
+            <div class="comment">לפי החלטת ממשלה 1022, יעד ההצללה הלאומי הוא 70%</div>
+            <div class="comment">להמרת כיסוי צומח להצללה יש לערוך חישובים נוספים</div>
+        </div>
     </div>
 
     <div class='icon-infos'>
@@ -48,7 +52,7 @@
                 <h2 class='tooltip' [matTooltip]='iconInfo.tooltip' *ngIf='iconInfo.tooltip'>{{iconInfo.text}}</h2>
                 <h2 *ngIf='!iconInfo.tooltip'>{{iconInfo.text}}</h2>
                 <div class='value'>
-                    <span class='number'>{{iconInfo.value}}</span>
+                    <span class='number' dir="ltr">{{iconInfo.value}}</span>
                     <span class='units'>{{iconInfo.units}}</span>
                 </div>
             </div>
