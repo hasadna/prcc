@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges } from '@angular/core';
 import { StateService } from '../state.service';
 import { MatSliderModule } from '@angular/material/slider';
 
@@ -85,17 +85,17 @@ const ICON_INFOS3: IconInfo[] = [
     value: '0',
   },
   {
-    text: 'חיסכון',
+    text: 'השפעת התערבות על המחיר למ"ר',
     icon: 'savings',
     tooltip: 'הזז את הסקרול לתוצאות',
-    units: '',
+    units: 'שח',
     value: '--',
   },
   {
     text: 'מניעת תחלואה',
     icon: 'prevent-sickness',
     tooltip: 'הזז את הסקרול לתוצאות',
-    units: '',
+    units: 'בשנה',
     value: '--',
   },
   {
@@ -126,6 +126,7 @@ export class RegionComponent implements OnChanges {
   iconInfos3: IconInfo[] = ICON_INFOS3;
   focusParams: any = {};
   nameOfRegion: String = 'unknown'; // region could be Muni or Stat-Area - depending on which view we are in!!
+  minVal: number = 0
 
   constructor(public state: StateService) {}
 
@@ -166,6 +167,9 @@ export class RegionComponent implements OnChanges {
       this.focusParams = {
         focus: this.focus,
       };
+
+      // save initial value of slider, to be used in onDragEnd
+      this.minVal = Math.round(100* this.record.VegFrac);
     }
       
   }
@@ -208,17 +212,27 @@ export class RegionComponent implements OnChanges {
   onDragEnd(event: any) {
     console.log('event dragEnd', event);
     console.log('slider value is now', event.value);
-    // hack - access iconInfos2 by index, assuming a known structure!!
-    const aoc = this.calculate_aoc(event.value);
-    const sqm = this.record.SqM_Costs;
-    const temperature_change = this.calculate_Temperature_change(event.value);
-    const house_price = this.calculate_hause_price(event.value);
-    const sickness = this.calculate_sickness(event.value);
-    this.iconInfos2[1].value = event.value.toFixed(0) + '%';
-    this.iconInfos3[0].value = String(temperature_change);
-    this.iconInfos3[1].value = String(house_price);
-    this.iconInfos3[2].value = String(sickness);
-    this.iconInfos3[3].value = String(aoc);
+    console.log('minimal value is', this.minVal);
+    if (Math.abs(event.value - this.minVal) < 0.5) {
+      this.iconInfos2[1].value = event.value.toFixed(0) + '%';
+      this.iconInfos3[0].value = '--';
+      this.iconInfos3[1].value = '--';
+      this.iconInfos3[2].value = '--';
+      this.iconInfos3[3].value = '--';
+    }
+    else {
+      // hack - access iconInfos2 by index, assuming a known structure!!
+      const aoc = this.calculate_aoc(event.value);
+      const sqm = this.record.SqM_Costs;
+      const temperature_change = this.calculate_Temperature_change(event.value);
+      const house_price = this.calculate_hause_price(event.value);
+      const sickness = this.calculate_sickness(event.value);
+      this.iconInfos2[1].value = event.value.toFixed(0) + '%';
+      this.iconInfos3[0].value = String(temperature_change);
+      this.iconInfos3[1].value = String(house_price);
+      this.iconInfos3[2].value = String(sickness);
+      this.iconInfos3[3].value = String(aoc);
+    }
   }
 
   calculate_sickness(slider_val_percents: number) {
@@ -283,9 +297,9 @@ export class RegionComponent implements OnChanges {
     }
 
     const SA_mean_housing_value = this.record['Average Cost Per Sqm']
-    const Area_Hezi = this.record['mr_Banooy']
+    //const Area_Hezi = this.record['mr_Banooy']
 
-    const housing_value_change_exact = SA_mean_housing_value * Area_Hezi * deltaNvdi * cluster_factor_table[this.record.cluster];
+    const housing_value_change_exact = SA_mean_housing_value * deltaNvdi * cluster_factor_table[this.record.cluster];
     const housing_value_change = housing_value_change_exact.toFixed(2);
 
     console.log("==> calculate_hause_price, slider_val_percents=", slider_val_percents );
@@ -294,8 +308,7 @@ export class RegionComponent implements OnChanges {
     console.log('deltaVegFrac=', deltaVegFrac);
     console.log('deltaNvdi=', deltaNvdi);
     console.log('SA_mean_housing_value=', SA_mean_housing_value);
-    console.log('Area_Hezi=', Area_Hezi);
-    console.log('deltaNvdi=', deltaNvdi);
+    //console.log('Area_Hezi=', Area_Hezi);
     console.log('this.record.cluster=', this.record.cluster);
     console.log('cluster factor=', cluster_factor_table[this.record.cluster]);
     console.log('housing_value_change=', housing_value_change);

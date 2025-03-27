@@ -36,7 +36,10 @@
             <input matSliderThumb  (dragEnd)="onDragEnd($event)">
         </mat-slider>
     </div>
-    <hr/>
+    
+    <div class='sources section'>
+        <h2 class='tooltip' [matTooltip]='"השפעת ההתערבות על האיזור הסטטיסטי"'>השפעת ההתערבות על האיזור הסטטיסטי</h2>
+    </div>
 
     <div class='icon-infos'>
         <div class='icon-info' *ngFor='let iconInfo of iconInfos3'>
