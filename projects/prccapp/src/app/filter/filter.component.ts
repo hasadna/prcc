@@ -36,6 +36,8 @@ export class FilterComponent {
       this.mode = 'stat-areas';
     } else if (state.mode.indexOf('odot') === 0) {
       this.mode = 'odot';
+    } else if (state.mode.indexOf('methodology') === 0) {
+      this.mode = 'odot';
     } else {
       this.mode = 'none';
     }
